@@ -78,11 +78,15 @@
 }
 
 - (void)setIntegerValue:(NSInteger)value forParameter:(NSString *)parameter {
-  [params_ setObject:[NSString stringWithFormat:@"%i", value] forKey:parameter];
+  [params_ setObject:[NSString stringWithFormat:@"%ld", (long)value] forKey:parameter];
 }
 
 - (NSString *)valueForParameter:(NSString *)parameter {
   return [params_ objectForKey:parameter];
+}
+
+- (NSInteger)integerValueForParameter:(NSString *)parameter {
+  return [[params_ objectForKey:parameter] integerValue];
 }
 
 - (void)removeParameter:(NSString *)parameter {
@@ -125,6 +129,10 @@
   }
 
   return YES;
+}
+
+- (NSUInteger)hash {
+  return [baseURLString_ hash] * 17 + [params_ hash] * 37;
 }
 
 @end
